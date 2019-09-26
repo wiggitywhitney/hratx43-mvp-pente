@@ -1,8 +1,8 @@
 import React from 'react';
 import PairSquare from './PairSquare.jsx';
+import Square from './Square.jsx';
 
 const Pairs = (props) => {
-  console.log(props)
   const redChart = props.redPairs.map((row, x) => {
     return (
       <tr key={"row_" + x}>
@@ -10,7 +10,7 @@ const Pairs = (props) => {
           const squareLook = props.redPairs[x][y] === '0' ? 'empty' : props.redPairs[x][y] === 'red' ? 'red':'gold';
 
           return (
-            <PairSquare squareLook={squareLook} key={x + ' ' + y} />
+            <Square squareLook={squareLook} key={x + ' ' + y} />
           )
         })}
       </tr>
@@ -24,7 +24,7 @@ const Pairs = (props) => {
           const squareLook = props.goldPairs[x][y] === '0' ? 'empty' : props.goldPairs[x][y] === 'red' ? 'red':'gold';
 
           return (
-            <PairSquare squareLook={squareLook} key={x + ' ' + y} />
+            <Square squareLook={squareLook} key={x + ' ' + y} />
           )
         })}
       </tr>
@@ -43,9 +43,20 @@ const Pairs = (props) => {
   </span>
   <span className="goldPairs">
     <table cellSpacing="0" className="pairsTable">
-      <caption className="text">Gold Pairs Captured</caption>
+    <caption className="text">Gold Pairs Captured</caption>
       <tbody>
         {goldChart}
+      </tbody>
+    </table>
+  </span>
+  <span className="nextMove">
+    <table cellSpacing="0" className="pairsTable">
+    <caption className="text">Next Turn: {(props.nextColor) ? 'Red' : 'Gold'}</caption>
+      <tbody>
+        <tr>
+        <PairSquare squareLook="empty" key="1" />
+        <PairSquare squareLook="empty" key="2" />
+        </tr>
       </tbody>
     </table>
   </span>

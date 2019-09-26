@@ -16,9 +16,14 @@ class Game extends React.Component {
       redIsNext: true,
       redCapturedPairs: 0,
       goldCapturedPairs: 0,
+      history:[],
     }
     this.handleClick = this.handleClick.bind(this);
     this.handleReset = this.handleReset.bind(this);
+    this.undoMove = this.undoMove.bind(this);
+    this.capturePair = this.capturePair.bind(this);
+    this.checkColumnForPair = this.checkColumnForPair.bind(this);
+    this.checkforPairinHist = this.checkforPairinHist.bind(this);
   }
 
   // componentDidMount() {
@@ -37,36 +42,85 @@ class Game extends React.Component {
 
   handleReset() {
     let newGrid = Array(13).fill().map(x => Array(13).fill('0'));
-    let newPairs = Array(5).fill().map(x => Array(2).fill('0'));
     this.setState({
       grid: newGrid,
-      redPairs: newPairs,
-      goldPairs: newPairs,
+      redPairs: Array(5).fill().map(x => Array(2).fill('0')),
+      goldPairs: Array(5).fill().map(x => Array(2).fill('0')),
       redIsNext: true,
       redCapturedPairs: 0,
       goldCapturedPairs: 0,
+      history: [],
     })
   }
 
   handleClick(x, y) {
+    const hist = this.state.history.concat([[x, y]])
     if (this.state.grid[x][y] === '0') {
       if (this.state.redIsNext === true) {
         this.state.grid[x][y] = 'red';
         this.setState({
           grid: this.state.grid,
           redIsNext: false,
-        })
+          history: hist,
+        } /*this.capturePair(x, y)*/)
       } else {
         this.state.grid[x][y] = 'gold';
         this.setState({
           grid: this.state.grid,
           redIsNext: true,
-        })
+          history: hist,
+        }, /*this.capturePair(x, y)*/)
       }
     }
+    this.capturePair(x, y)
     this.calculateWin(x, y);
-    this.capturePair(x, y);
+    console.log(this.state.history);
   }
+
+  undoMove() {
+    if (this.state.history.length <= 0) {
+      return;
+    }
+
+    let currentMove = this.state.history.pop();
+
+    this.state.grid[currentMove[0]][currentMove[1]] = '0';
+
+    this.setState({
+      grid: this.state.grid,
+      history: this.state.history,
+      redIsNext: !this.state.redIsNext,
+    }, this.checkforPairinHist())
+
+  }
+
+  checkforPairinHist() {
+    if (this.state.history[this.state.history.length - 1].length === 3) {
+      let pairArr = this.state.history.pop();
+      if (parArr[2] === 'gold') {
+        this.state.grid[parArr[0][0]][parArr[0][1]] = 'red';
+        this.state.grid[parArr[1][0]][parArr[1][1]] = 'red';
+        this.state.redPairs[this.state.goldCapturedPairs - 1][0] = '0';
+        this.state.redPairs[this.state.goldCapturedPairs - 1][1] = '0';
+        this.state.goldCapturedPairs = this.state.goldCapturedPairs - 1;
+      } else {
+        this.state.grid[parArr[0][0]][parArr[0][1]] = 'gold';
+        this.state.grid[parArr[1][0]][parArr[1][1]] = 'gold';
+        this.state.goldPairs[this.state.redCapturedPairs - 1][0] = '0';
+        this.state.goldPairs[this.state.redCapturedPairs - 1][1] = '0';
+        this.state.redCapturedPairs = this.state.redCapturedPairs - 1;
+      }
+      this.setState({
+        grid: this.state.grid,
+        history: this.state.history,
+        redPairs: this.state.redPairs,
+        goldPairs: this.state.goldPairs,
+        redCapturedPairs: this.state.redCapturedPairs,
+        goldCapturedPairs: this.state.goldCapturedPairs,
+      }, console.log(this.state))
+    }
+  }
+
 
   calculateWin(x,y) {
     this.checkColumns(x,y);
@@ -132,13 +186,21 @@ class Game extends React.Component {
         }
         this.state.grid[x - 1][y] = "0";
         this.state.grid[x - 2][y] = "0";
+        const removed = [[[x - 1, y], [x - 2, y], color], [x, y]]
+        const histo = this.state.history.concat(removed)
+        // let currentMove = this.state.history.pop();
+        // currentMove.push('X-1&X-2');
+        // currentMove.push(color);
+        // const history = this.state.history.concat([currentMove])
+
         this.setState({
           goldCapturedPairs: this.state.goldCapturedPairs,
           redCapturedPairs: this.state.redCapturedPairs,
           goldPairs: this.state.goldPairs,
           redPairs: this.state.redPairs,
-          grid: this.state.grid
-        })
+          grid: this.state.grid,
+          history: histo,
+        }, console.log(this.state.history))
       }
     }
 
@@ -155,13 +217,17 @@ class Game extends React.Component {
         }
         this.state.grid[x + 1][y] = "0";
         this.state.grid[x + 2][y] = "0";
+        const removed = [[[x + 1, y], [x + 2, y], color], [x, y]]
+        const histo = this.state.history.concat(removed)
+
         this.setState({
           goldCapturedPairs: this.state.goldCapturedPairs,
           redCapturedPairs: this.state.redCapturedPairs,
           goldPairs: this.state.goldPairs,
           redPairs: this.state.redPairs,
-          grid: this.state.grid
-        })
+          grid: this.state.grid,
+          history: histo
+        }, console.log(this.state.history))
       }
     }
   }
@@ -401,9 +467,9 @@ class Game extends React.Component {
 
 
   render () {
+
     return (
     <div>
-
       <div>
         <h1 className="pente text">Pente</h1>
       </div>
@@ -412,7 +478,7 @@ class Game extends React.Component {
           <Board grid={this.state.grid} handleClick={this.handleClick} />
         </span>
         <span>
-          <Pairs redPairs={this.state.redPairs} goldPairs={this.state.goldPairs} />
+          <Pairs redPairs={this.state.redPairs} goldPairs={this.state.goldPairs} nextColor={this.state.redIsNext}/>
         </span>
       </div>
 
@@ -421,7 +487,7 @@ class Game extends React.Component {
           <button className="button reset text" onClick={this.handleReset}>reset game</button>
         </span>
         <span>
-          <button className="button undo text">undo move</button>
+          <button className="button undo text" onClick={this.undoMove}>undo move</button>
         </span>
       </div>
     </div>
