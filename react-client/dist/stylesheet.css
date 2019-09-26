@@ -1,0 +1,48 @@
+/* body {
+  width: 100%;
+} */
+
+/* .board {
+  width: 500px;
+  display: grid;
+  border: solid black 1px
+  grid-template-columns: 7.143% 7.143% 7.143% 7.143% 7.143%;
+  grid-template-rows: 7.143% 7.143% 7.143% 7.143% 7.143%;
+} */
+
+#table {
+  width: 520px;
+  height: 520px;
+  border: solid 2px black;
+  background: rgb(250, 216, 187);
+}
+
+.red {
+  border-radius: 50%;
+  border: solid black 1px;
+  background: rgb(180, 1, 10);
+  color: white;
+  text-align: center;
+}
+
+.gold {
+  border-radius: 50%;
+  border: solid black 1px;
+  background: rgb(255, 208, 0);
+  color: white;
+  text-align: center;
+  line-height: 1;
+  box-sizing: content-box;
+}
+
+.square {
+  width: 40px;
+  height: 40px;
+  border: solid black 1px;
+  display: flex;
+  align-items: center;
+}
+
+
+
+
