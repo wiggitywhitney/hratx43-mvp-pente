@@ -74,7 +74,6 @@ class Game extends React.Component {
     }
     this.capturePair(x, y)
     this.calculateWin(x, y);
-    console.log(this.state.history);
   }
 
   undoMove() {
@@ -121,7 +120,7 @@ class Game extends React.Component {
         goldPairs: this.state.goldPairs,
         redCapturedPairs: this.state.redCapturedPairs,
         goldCapturedPairs: this.state.goldCapturedPairs,
-      }, console.log(this.state))
+      })
     }
   }
 
@@ -204,7 +203,7 @@ class Game extends React.Component {
           redPairs: this.state.redPairs,
           grid: this.state.grid,
           history: histo,
-        }, console.log(this.state.history))
+        })
       }
     }
 
@@ -231,7 +230,7 @@ class Game extends React.Component {
           redPairs: this.state.redPairs,
           grid: this.state.grid,
           history: histo
-        }, console.log(this.state.history))
+        })
       }
     }
   }
