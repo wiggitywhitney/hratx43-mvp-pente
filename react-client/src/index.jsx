@@ -240,7 +240,7 @@ class Game extends React.Component {
     let color = (this.state.redIsNext === false) ? 'gold' : 'red';
     let opponent = (this.state.redIsNext === true) ? 'gold' : 'red';
 
-    if (x - 3 >= 0 && x + 3 <= 12 && y - 3 >= 0 && y + 3 <= 12) {
+    if (x - 3 >= 0 && y - 3 >= 0) {
       if ((this.state.grid[x - 1][y - 1] === opponent) && (this.state.grid[x - 2][y - 2] === opponent) && (this.state.grid[x - 3][y - 3] === color)) {
         if (color === 'gold') {
           this.state.goldCapturedPairs = this.state.goldCapturedPairs + 1;
@@ -255,7 +255,9 @@ class Game extends React.Component {
           grid: this.state.grid
         }, console.log(this.state))
       }
+    }
 
+    if (x + 3 <= 12 && y + 3 <= 12) {
       if ((this.state.grid[x + 1][y + 1] === opponent) && (this.state.grid[x + 2][y + 2] === opponent) && (this.state.grid[x + 3][y + 3] === color)) {
         if (color === 'gold') {
           this.state.goldCapturedPairs = this.state.goldCapturedPairs + 1;
@@ -305,7 +307,7 @@ class Game extends React.Component {
     let color = (this.state.redIsNext === false) ? 'gold' : 'red';
     let opponent = (this.state.redIsNext === true) ? 'gold' : 'red';
 
-    if (x - 3 >= 0 && x + 3 <= 12 && y - 3 >= 0 && y + 3 <= 12) {
+    if (x + 3 <= 12 && y - 3 >= 0) {
       if ((this.state.grid[x + 1][y - 1] === opponent) && (this.state.grid[x + 2][y - 2] === opponent) && (this.state.grid[x + 3][y - 3] === color)) {
         if (color === 'gold') {
           this.state.goldCapturedPairs = this.state.goldCapturedPairs + 1;
@@ -320,7 +322,9 @@ class Game extends React.Component {
           grid: this.state.grid,
         }, console.log(this.state))
       }
+    }
 
+    if (x - 3 >= 0 && y + 3 <= 12) {
       if ((this.state.grid[x - 1][y + 1] === opponent) && (this.state.grid[x - 2][y + 2] === opponent) && (this.state.grid[x - 3][y + 3] === color)) {
         if (color === 'gold') {
           this.state.goldCapturedPairs = this.state.goldCapturedPairs + 1;
