@@ -1,10 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-//import 'typeface-roboto';
 import $ from 'jquery';
 import Board from './components/Board.jsx';
 import Pairs from './components/Pairs.jsx';
-//import 'bootstrap/dist/css/bootstrap.min.css';
 
 class Game extends React.Component {
   constructor(props) {
@@ -62,14 +60,14 @@ class Game extends React.Component {
           grid: this.state.grid,
           redIsNext: false,
           history: hist,
-        } /*this.capturePair(x, y)*/)
+        })
       } else {
         this.state.grid[x][y] = 'gold';
         this.setState({
           grid: this.state.grid,
           redIsNext: true,
           history: hist,
-        }, /*this.capturePair(x, y)*/)
+        })
       }
     }
     this.capturePair(x, y)
@@ -123,7 +121,6 @@ class Game extends React.Component {
       })
     }
   }
-
 
   calculateWin(x,y) {
     this.checkColumns(x,y);
@@ -191,10 +188,6 @@ class Game extends React.Component {
         this.state.grid[x - 2][y] = "0";
         const removed = [[[x - 1, y], [x - 2, y], color], [x, y]]
         const histo = this.state.history.concat(removed)
-        // let currentMove = this.state.history.pop();
-        // currentMove.push('X-1&X-2');
-        // currentMove.push(color);
-        // const history = this.state.history.concat([currentMove])
 
         this.setState({
           goldCapturedPairs: this.state.goldCapturedPairs,
@@ -343,7 +336,6 @@ class Game extends React.Component {
       startingX++;
       startingY++;
     }
-
   }
 
   checkMajorDiagonalForPair(x, y) {
