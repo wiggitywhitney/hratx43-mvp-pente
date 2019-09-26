@@ -95,8 +95,12 @@ class Game extends React.Component {
   }
 
   checkforPairinHist() {
+    if (this.state.history.length <= 0) {
+      return;
+    }
+
     if (this.state.history[this.state.history.length - 1].length === 3) {
-      let pairArr = this.state.history.pop();
+      let parArr = this.state.history.pop();
       if (parArr[2] === 'gold') {
         this.state.grid[parArr[0][0]][parArr[0][1]] = 'red';
         this.state.grid[parArr[1][0]][parArr[1][1]] = 'red';
@@ -272,12 +276,16 @@ class Game extends React.Component {
         }
         this.state.grid[x][y - 1] = "0";
         this.state.grid[x][y - 2] = "0";
+        const removed = [[[x, y - 1], [x, y - 2], color], [x, y]];
+        const histo = this.state.history.concat(removed);
+
         this.setState({
           goldCapturedPairs: this.state.goldCapturedPairs,
           redCapturedPairs: this.state.redCapturedPairs,
           goldPairs: this.state.goldPairs,
           redPairs: this.state.redPairs,
-          grid: this.state.grid
+          grid: this.state.grid,
+          history: histo
         })
       }
     }
@@ -295,12 +303,16 @@ class Game extends React.Component {
         }
         this.state.grid[x][y + 1] = "0";
         this.state.grid[x][y + 2] = "0";
+        const removed = [[[x, y + 1], [x, y + 2], color], [x, y]];
+        const histo = this.state.history.concat(removed);
+
         this.setState({
           goldCapturedPairs: this.state.goldCapturedPairs,
           redCapturedPairs: this.state.redCapturedPairs,
           goldPairs: this.state.goldPairs,
           redPairs: this.state.redPairs,
-          grid: this.state.grid
+          grid: this.state.grid,
+          history: histo
         })
       }
     }
@@ -352,12 +364,16 @@ class Game extends React.Component {
         }
         this.state.grid[x - 1][y - 1] = "0";
         this.state.grid[x - 2][y - 2] = "0";
+        const removed = [[[x - 1, y - 1], [x - 2, y - 2], color], [x, y]];
+        const histo = this.state.history.concat(removed);
+
         this.setState({
           goldCapturedPairs: this.state.goldCapturedPairs,
           redCapturedPairs: this.state.redCapturedPairs,
           goldPairs: this.state.goldPairs,
           redPairs: this.state.redPairs,
-          grid: this.state.grid
+          grid: this.state.grid,
+          history: histo,
         })
       }
     }
@@ -375,12 +391,16 @@ class Game extends React.Component {
         }
         this.state.grid[x + 1][y + 1] = "0";
         this.state.grid[x + 2][y + 2] = "0";
+        const removed = [[[x + 1, y + 1], [x + 2, y + 2], color], [x, y]];
+        const histo = this.state.history.concat(removed);
+
         this.setState({
           goldCapturedPairs: this.state.goldCapturedPairs,
           redCapturedPairs: this.state.redCapturedPairs,
           goldPairs: this.state.goldPairs,
           redPairs: this.state.redPairs,
-          grid: this.state.grid
+          grid: this.state.grid,
+          history: histo,
         })
       }
     }
@@ -431,12 +451,16 @@ class Game extends React.Component {
         }
         this.state.grid[x + 1][y - 1] = "0";
         this.state.grid[x + 2][y - 2] = "0";
+        const removed = [[[x + 1, y - 1], [x + 2, y - 2], color], [x, y]];
+        const histo = this.state.history.concat(removed);
+
         this.setState({
           goldCapturedPairs: this.state.goldCapturedPairs,
           redCapturedPairs: this.state.redCapturedPairs,
           goldPairs: this.state.goldPairs,
           redPairs: this.state.redPairs,
-          grid: this.state.grid
+          grid: this.state.grid,
+          history: histo,
         })
       }
     }
@@ -454,12 +478,16 @@ class Game extends React.Component {
         }
         this.state.grid[x - 1][y + 1] = "0";
         this.state.grid[x - 2][y + 2] = "0";
+        const removed = [[[x - 1, y + 1], [x - 2, y + 2], color], [x, y]];
+        const histo = this.state.history.concat(removed);
+
         this.setState({
           goldCapturedPairs: this.state.goldCapturedPairs,
           redCapturedPairs: this.state.redCapturedPairs,
           goldPairs: this.state.goldPairs,
           redPairs: this.state.redPairs,
-          grid: this.state.grid
+          grid: this.state.grid,
+          history: histo
         })
       }
     }
