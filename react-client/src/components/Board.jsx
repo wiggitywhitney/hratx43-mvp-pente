@@ -18,7 +18,7 @@ const Board = (props) => {
 
   return (
   <div className="board">
-    <table cellSpacing="0" id="table">
+    <table cellSpacing="0" id="boardTable">
       <tbody>
         {board}
       </tbody>

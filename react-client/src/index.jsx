@@ -3,13 +3,16 @@ import ReactDOM from 'react-dom';
 //import 'typeface-roboto';
 import $ from 'jquery';
 import Board from './components/Board.jsx';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import Pairs from './components/Pairs.jsx';
+//import 'bootstrap/dist/css/bootstrap.min.css';
 
 class Game extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       grid: Array(13).fill().map(x => Array(13).fill("0")),
+      redPairs: Array(5).fill().map(x => Array(2).fill("0")),
+      goldPairs: Array(5).fill().map(x => Array(2).fill("0")),
       redIsNext: true,
       redCapturedPairs: 0,
       goldCapturedPairs: 0,
@@ -34,8 +37,11 @@ class Game extends React.Component {
 
   handleReset() {
     let newGrid = Array(13).fill().map(x => Array(13).fill('0'));
+    let newPairs = Array(5).fill().map(x => Array(2).fill('0'));
     this.setState({
       grid: newGrid,
+      redPairs: newPairs,
+      goldPairs: newPairs,
       redIsNext: true,
       redCapturedPairs: 0,
       goldCapturedPairs: 0,
@@ -113,36 +119,49 @@ class Game extends React.Component {
     let color = (this.state.redIsNext === false) ? 'gold' : 'red';
     let opponent = (this.state.redIsNext === true) ? 'gold' : 'red';
 
-    if (x - 3 >= 0 && x + 3 <= 12) {
+    if (x - 3 >= 0) {
       if ((this.state.grid[x - 1][y] === opponent) && (this.state.grid[x - 2][y] === opponent) && (this.state.grid[x - 3][y] === color)) {
         if (color === 'gold') {
           this.state.goldCapturedPairs = this.state.goldCapturedPairs + 1;
+          this.state.redPairs[this.state.goldCapturedPairs - 1][0] = 'red';
+          this.state.redPairs[this.state.goldCapturedPairs - 1][1] = 'red';
         } else {
           this.state.redCapturedPairs = this.state.redCapturedPairs + 1;
+          this.state.goldPairs[this.state.redCapturedPairs - 1][0] = 'gold';
+          this.state.goldPairs[this.state.redCapturedPairs - 1][1] = 'gold';
         }
         this.state.grid[x - 1][y] = "0";
         this.state.grid[x - 2][y] = "0";
         this.setState({
           goldCapturedPairs: this.state.goldCapturedPairs,
           redCapturedPairs: this.state.redCapturedPairs,
+          goldPairs: this.state.goldPairs,
+          redPairs: this.state.redPairs,
           grid: this.state.grid
-        }, console.log(this.state))
+        })
       }
+    }
 
-
+    if (x + 3 <= 12) {
       if ((this.state.grid[x + 1][y] === opponent) && (this.state.grid[x + 2][y] === opponent) && (this.state.grid[x + 3][y] === color)) {
         if (color === 'gold') {
           this.state.goldCapturedPairs = this.state.goldCapturedPairs + 1;
+          this.state.redPairs[this.state.goldCapturedPairs - 1][0] = 'red';
+          this.state.redPairs[this.state.goldCapturedPairs - 1][1] = 'red';
         } else {
           this.state.redCapturedPairs = this.state.redCapturedPairs + 1;
+          this.state.goldPairs[this.state.redCapturedPairs - 1][0] = 'gold';
+          this.state.goldPairs[this.state.redCapturedPairs - 1][1] = 'gold';
         }
         this.state.grid[x + 1][y] = "0";
         this.state.grid[x + 2][y] = "0";
         this.setState({
           goldCapturedPairs: this.state.goldCapturedPairs,
           redCapturedPairs: this.state.redCapturedPairs,
+          goldPairs: this.state.goldPairs,
+          redPairs: this.state.redPairs,
           grid: this.state.grid
-        }, console.log(this.state))
+        })
       }
     }
   }
@@ -174,35 +193,49 @@ class Game extends React.Component {
     let color = (this.state.redIsNext === false) ? 'gold' : 'red';
     let opponent = (this.state.redIsNext === true) ? 'gold' : 'red';
 
-    if (y - 3 >= 0 && y + 3 <= 12) {
+    if (y - 3 >= 0) {
       if ((this.state.grid[x][y - 1] === opponent) && (this.state.grid[x][y - 2] === opponent) && (this.state.grid[x][y - 3] === color)) {
         if (color === 'gold') {
           this.state.goldCapturedPairs = this.state.goldCapturedPairs + 1;
+          this.state.redPairs[this.state.goldCapturedPairs - 1][0] = 'red';
+          this.state.redPairs[this.state.goldCapturedPairs - 1][1] = 'red';
         } else {
           this.state.redCapturedPairs = this.state.redCapturedPairs + 1;
+          this.state.goldPairs[this.state.redCapturedPairs - 1][0] = 'gold';
+          this.state.goldPairs[this.state.redCapturedPairs - 1][1] = 'gold';
         }
         this.state.grid[x][y - 1] = "0";
         this.state.grid[x][y - 2] = "0";
         this.setState({
           goldCapturedPairs: this.state.goldCapturedPairs,
           redCapturedPairs: this.state.redCapturedPairs,
+          goldPairs: this.state.goldPairs,
+          redPairs: this.state.redPairs,
           grid: this.state.grid
-        }, console.log(this.state))
+        })
       }
+    }
 
+    if (y + 3 <= 12) {
       if ((this.state.grid[x][y + 1] === opponent) && (this.state.grid[x][y + 2] === opponent) && (this.state.grid[x][y + 3] === color)) {
         if (color === 'gold') {
           this.state.goldCapturedPairs = this.state.goldCapturedPairs + 1;
+          this.state.redPairs[this.state.goldCapturedPairs - 1][0] = 'red';
+          this.state.redPairs[this.state.goldCapturedPairs - 1][1] = 'red';
         } else {
           this.state.redCapturedPairs = this.state.redCapturedPairs + 1;
+          this.state.goldPairs[this.state.redCapturedPairs - 1][0] = 'gold';
+          this.state.goldPairs[this.state.redCapturedPairs - 1][1] = 'gold';
         }
         this.state.grid[x][y + 1] = "0";
         this.state.grid[x][y + 2] = "0";
         this.setState({
           goldCapturedPairs: this.state.goldCapturedPairs,
           redCapturedPairs: this.state.redCapturedPairs,
+          goldPairs: this.state.goldPairs,
+          redPairs: this.state.redPairs,
           grid: this.state.grid
-        }, console.log(this.state))
+        })
       }
     }
   }
@@ -244,16 +277,22 @@ class Game extends React.Component {
       if ((this.state.grid[x - 1][y - 1] === opponent) && (this.state.grid[x - 2][y - 2] === opponent) && (this.state.grid[x - 3][y - 3] === color)) {
         if (color === 'gold') {
           this.state.goldCapturedPairs = this.state.goldCapturedPairs + 1;
+          this.state.redPairs[this.state.goldCapturedPairs - 1][0] = 'red';
+          this.state.redPairs[this.state.goldCapturedPairs - 1][1] = 'red';
         } else {
           this.state.redCapturedPairs = this.state.redCapturedPairs + 1;
+          this.state.goldPairs[this.state.redCapturedPairs - 1][0] = 'gold';
+          this.state.goldPairs[this.state.redCapturedPairs - 1][1] = 'gold';
         }
         this.state.grid[x - 1][y - 1] = "0";
         this.state.grid[x - 2][y - 2] = "0";
         this.setState({
           goldCapturedPairs: this.state.goldCapturedPairs,
           redCapturedPairs: this.state.redCapturedPairs,
+          goldPairs: this.state.goldPairs,
+          redPairs: this.state.redPairs,
           grid: this.state.grid
-        }, console.log(this.state))
+        })
       }
     }
 
@@ -261,16 +300,22 @@ class Game extends React.Component {
       if ((this.state.grid[x + 1][y + 1] === opponent) && (this.state.grid[x + 2][y + 2] === opponent) && (this.state.grid[x + 3][y + 3] === color)) {
         if (color === 'gold') {
           this.state.goldCapturedPairs = this.state.goldCapturedPairs + 1;
+          this.state.redPairs[this.state.goldCapturedPairs - 1][0] = 'red';
+          this.state.redPairs[this.state.goldCapturedPairs - 1][1] = 'red';
         } else {
           this.state.redCapturedPairs = this.state.redCapturedPairs + 1;
+          this.state.goldPairs[this.state.redCapturedPairs - 1][0] = 'gold';
+          this.state.goldPairs[this.state.redCapturedPairs - 1][1] = 'gold';
         }
         this.state.grid[x + 1][y + 1] = "0";
         this.state.grid[x + 2][y + 2] = "0";
         this.setState({
           goldCapturedPairs: this.state.goldCapturedPairs,
           redCapturedPairs: this.state.redCapturedPairs,
-          grid: this.state.grid,
-        }, console.log(this.state))
+          goldPairs: this.state.goldPairs,
+          redPairs: this.state.redPairs,
+          grid: this.state.grid
+        })
       }
     }
   }
@@ -311,16 +356,22 @@ class Game extends React.Component {
       if ((this.state.grid[x + 1][y - 1] === opponent) && (this.state.grid[x + 2][y - 2] === opponent) && (this.state.grid[x + 3][y - 3] === color)) {
         if (color === 'gold') {
           this.state.goldCapturedPairs = this.state.goldCapturedPairs + 1;
+          this.state.redPairs[this.state.goldCapturedPairs - 1][0] = 'red';
+          this.state.redPairs[this.state.goldCapturedPairs - 1][1] = 'red';
         } else {
           this.state.redCapturedPairs = this.state.redCapturedPairs + 1;
+          this.state.goldPairs[this.state.redCapturedPairs - 1][0] = 'gold';
+          this.state.goldPairs[this.state.redCapturedPairs - 1][1] = 'gold';
         }
         this.state.grid[x + 1][y - 1] = "0";
         this.state.grid[x + 2][y - 2] = "0";
         this.setState({
           goldCapturedPairs: this.state.goldCapturedPairs,
           redCapturedPairs: this.state.redCapturedPairs,
-          grid: this.state.grid,
-        }, console.log(this.state))
+          goldPairs: this.state.goldPairs,
+          redPairs: this.state.redPairs,
+          grid: this.state.grid
+        })
       }
     }
 
@@ -328,16 +379,22 @@ class Game extends React.Component {
       if ((this.state.grid[x - 1][y + 1] === opponent) && (this.state.grid[x - 2][y + 2] === opponent) && (this.state.grid[x - 3][y + 3] === color)) {
         if (color === 'gold') {
           this.state.goldCapturedPairs = this.state.goldCapturedPairs + 1;
+          this.state.redPairs[this.state.goldCapturedPairs - 1][0] = 'red';
+          this.state.redPairs[this.state.goldCapturedPairs - 1][1] = 'red';
         } else {
           this.state.redCapturedPairs = this.state.redCapturedPairs + 1;
+          this.state.goldPairs[this.state.redCapturedPairs - 1][0] = 'gold';
+          this.state.goldPairs[this.state.redCapturedPairs - 1][1] = 'gold';
         }
         this.state.grid[x - 1][y + 1] = "0";
         this.state.grid[x - 2][y + 2] = "0";
         this.setState({
           goldCapturedPairs: this.state.goldCapturedPairs,
           redCapturedPairs: this.state.redCapturedPairs,
+          goldPairs: this.state.goldPairs,
+          redPairs: this.state.redPairs,
           grid: this.state.grid
-        }, console.log(this.state))
+        })
       }
     }
   }
@@ -346,8 +403,27 @@ class Game extends React.Component {
   render () {
     return (
     <div>
-      <h1>Pente</h1>
-      <Board grid={this.state.grid} handleClick={this.handleClick} />
+
+      <div>
+        <h1 className="pente text">Pente</h1>
+      </div>
+      <div className="container">
+        <span>
+          <Board grid={this.state.grid} handleClick={this.handleClick} />
+        </span>
+        <span>
+          <Pairs redPairs={this.state.redPairs} goldPairs={this.state.goldPairs} />
+        </span>
+      </div>
+
+      <div className="buttons">
+        <span>
+          <button className="button reset text" onClick={this.handleReset}>reset game</button>
+        </span>
+        <span>
+          <button className="button undo text">undo move</button>
+        </span>
+      </div>
     </div>
     )
   }
