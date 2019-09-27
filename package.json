@@ -6,8 +6,7 @@
     "react-dev": "webpack -d --watch",
     "webpack": "webpack",
     "server-dev": "nodemon server/index.js",
-    "deploy": "pm2 deploy ecosystem.config.js production",
-    "start": "server/index.js"
+    "deploy": "pm2 deploy ecosystem.config.js production"
   },
   "author": "Beth Johnson",
   "license": "ISC",

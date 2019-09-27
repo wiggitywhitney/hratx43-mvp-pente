@@ -64,7 +64,7 @@ class Game extends React.Component {
         redIsNext: !globalState.redIsNext,
         redCapturedPairs: globalState.redCapturedPairs,
         goldCapturedPairs: globalState.goldCapturedPairs,
-        //history: globalState.history,
+        history: globalState.history,
         endpoint: globalState.endpoint
       })
     })
@@ -72,9 +72,8 @@ class Game extends React.Component {
 
 
   handleReset() {
-    let newGrid = Array(13).fill().map(x => Array(13).fill('0'));
     this.setState({
-      grid: newGrid,
+      grid: Array(13).fill().map(x => Array(13).fill('0')),
       redPairs: Array(5).fill().map(x => Array(2).fill('0')),
       goldPairs: Array(5).fill().map(x => Array(2).fill('0')),
       redIsNext: true,
