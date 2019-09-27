@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import Board from './components/Board.jsx';
 import Pairs from './components/Pairs.jsx';
+import io from 'socket.io-client'
 
 class Game extends React.Component {
   constructor(props) {
@@ -15,6 +16,7 @@ class Game extends React.Component {
       redCapturedPairs: 0,
       goldCapturedPairs: 0,
       history:[],
+      endpoint: 'http://localhost:3000/'
     }
     this.handleClick = this.handleClick.bind(this);
     this.handleReset = this.handleReset.bind(this);
@@ -22,21 +24,52 @@ class Game extends React.Component {
     this.capturePair = this.capturePair.bind(this);
     this.checkColumnForPair = this.checkColumnForPair.bind(this);
     this.checkforPairinHist = this.checkforPairinHist.bind(this);
+    this.setGlobalState = this.setGlobalState.bind(this);
+    this.globalStateListener = this.globalStateListener.bind(this);
   }
 
-  // componentDidMount() {
-  //   $.ajax({
-  //     url: '/items',
-  //     success: (data) => {
-  //       this.setState({
-  //         items: data
-  //       })
-  //     },
-  //     error: (err) => {
-  //       console.log('err', err);
-  //     }
-  //   });
-  // }
+  componentDidMount() {
+    const { endpoint } = this.state;
+    const socket = io(endpoint);
+    socket.on();
+    this.globalStateListener();
+
+    // $.ajax({
+    //   url: '/items',
+    //   success: (data) => {
+    //     this.setState({
+    //       items: data
+    //     })
+    //   },
+    //   error: (err) => {
+    //     console.log('err', err);
+    //   }
+    // });
+  }
+
+  setGlobalState() {
+    const { endpoint } = this.state;
+    const socket = io(endpoint);
+    socket.emit('setGlobalState', this.state);
+  }
+
+  globalStateListener() {
+    const { endpoint } = this.state;
+    const socket = io(endpoint);
+    socket.on('currentState', (globalState) =>{
+      this.setState({
+        grid: globalState.grid,
+        redPairs: globalState.redPairs,
+        goldPairs: globalState.goldPairs,
+        redIsNext: !globalState.redIsNext,
+        redCapturedPairs: globalState.redCapturedPairs,
+        goldCapturedPairs: globalState.goldCapturedPairs,
+        //history: globalState.history,
+        endpoint: globalState.endpoint
+      })
+    })
+  }
+
 
   handleReset() {
     let newGrid = Array(13).fill().map(x => Array(13).fill('0'));
@@ -48,7 +81,7 @@ class Game extends React.Component {
       redCapturedPairs: 0,
       goldCapturedPairs: 0,
       history: [],
-    })
+    }, this.setGlobalState())
   }
 
   handleClick(x, y) {
@@ -60,14 +93,14 @@ class Game extends React.Component {
           grid: this.state.grid,
           redIsNext: false,
           history: hist,
-        })
+        }, this.setGlobalState())
       } else {
         this.state.grid[x][y] = 'gold';
         this.setState({
           grid: this.state.grid,
           redIsNext: true,
           history: hist,
-        })
+        }, this.setGlobalState())
       }
     }
     this.capturePair(x, y)
@@ -92,6 +125,8 @@ class Game extends React.Component {
   }
 
   checkforPairinHist() {
+    this.setGlobalState();
+
     if (this.state.history.length <= 0) {
       return;
     }
@@ -118,7 +153,7 @@ class Game extends React.Component {
         goldPairs: this.state.goldPairs,
         redCapturedPairs: this.state.redCapturedPairs,
         goldCapturedPairs: this.state.goldCapturedPairs,
-      })
+      }, this.setGlobalState())
     }
   }
 
@@ -196,7 +231,7 @@ class Game extends React.Component {
           redPairs: this.state.redPairs,
           grid: this.state.grid,
           history: histo,
-        })
+        }, this.setGlobalState())
       }
     }
 
@@ -223,7 +258,7 @@ class Game extends React.Component {
           redPairs: this.state.redPairs,
           grid: this.state.grid,
           history: histo
-        })
+        }, this.setGlobalState())
       }
     }
   }
@@ -278,7 +313,7 @@ class Game extends React.Component {
           redPairs: this.state.redPairs,
           grid: this.state.grid,
           history: histo
-        })
+        }, this.setGlobalState())
       }
     }
 
@@ -305,7 +340,7 @@ class Game extends React.Component {
           redPairs: this.state.redPairs,
           grid: this.state.grid,
           history: histo
-        })
+        }, this.setGlobalState())
       }
     }
   }
@@ -365,7 +400,7 @@ class Game extends React.Component {
           redPairs: this.state.redPairs,
           grid: this.state.grid,
           history: histo,
-        })
+        }, this.setGlobalState())
       }
     }
 
@@ -392,7 +427,7 @@ class Game extends React.Component {
           redPairs: this.state.redPairs,
           grid: this.state.grid,
           history: histo,
-        })
+        }, this.setGlobalState())
       }
     }
   }
@@ -452,7 +487,7 @@ class Game extends React.Component {
           redPairs: this.state.redPairs,
           grid: this.state.grid,
           history: histo,
-        })
+        }, this.setGlobalState())
       }
     }
 
@@ -479,7 +514,7 @@ class Game extends React.Component {
           redPairs: this.state.redPairs,
           grid: this.state.grid,
           history: histo
-        })
+        }, this.setGlobalState())
       }
     }
   }

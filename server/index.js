@@ -1,17 +1,32 @@
-var express = require('express');
-var bodyParser = require('body-parser');
+const express = require('express');
+const bodyParser = require('body-parser');
+const socket = require('socket.io');
+const port = process.env.PORT || 3000;
+const axios = require('axios');
+const app = express();
+
 // UNCOMMENT THE DATABASE YOU'D LIKE TO USE
-// var items = require('../database-mysql');
-// var items = require('../database-mongo');
+// const items = require('../database-mysql');
+// const items = require('../database-mongo');
 
-var app = express();
-
-// UNCOMMENT FOR REACT
 app.use(express.static(__dirname + '/../react-client/dist'));
 
-// UNCOMMENT FOR ANGULAR
-// app.use(express.static(__dirname + '/../angular-client'));
-// app.use(express.static(__dirname + '/../node_modules'));
+const server = app.listen(port, () => console.log(`server listening on port ${port}!`));
+
+const io = socket(server);
+
+io.on('connection', function(socket){
+
+  console.log(`${socket.id} connected!`)
+
+  socket.on('setGlobalState', (state)=>{
+    io.emit('currentState', state);
+    //console.log(state);
+  });
+
+});
+
+
 
 // app.get('/items', function (req, res) {
 //   items.selectAll(function(err, data) {
@@ -23,7 +38,7 @@ app.use(express.static(__dirname + '/../react-client/dist'));
 //   });
 // });
 
-app.listen(3000, function() {
-  console.log('listening on port 3000!');
-});
+// app.listen(port, function() {
+//   console.log('listening on port 3000!');
+// });
 
