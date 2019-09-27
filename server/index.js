@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const socket = require('socket.io');
-const port = 3000;
+const port = process.env.PORT || 80;
 const axios = require('axios');
 const app = express();
 
@@ -21,7 +21,6 @@ io.on('connection', function(socket){
 
   socket.on('setGlobalState', (state)=>{
     io.emit('currentState', state);
-    //console.log(state);
   });
 
 });
