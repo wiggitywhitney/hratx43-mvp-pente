@@ -11,7 +11,7 @@ module.exports = {
       ref: 'origin/master',
       repo: 'https://github.com/wiggitywhitney/hratx43-mvp-pente.git',
       path: '/home/ubuntu/',
-      'post-deploy': 'npm install && npm run react-dev && pm2 startOrRestart ecosystem.config.js'
+      'post-deploy': 'npm install --ignore-scripts && npm run webpack && pm2 startOrRestart ecosystem.config.js'
     }
   }
 }
