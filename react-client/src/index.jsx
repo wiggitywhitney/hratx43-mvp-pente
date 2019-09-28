@@ -64,7 +64,7 @@ class Game extends React.Component {
         redIsNext: !globalState.redIsNext,
         redCapturedPairs: globalState.redCapturedPairs,
         goldCapturedPairs: globalState.goldCapturedPairs,
-        history: globalState.history,
+        //history: globalState.history,
         endpoint: globalState.endpoint
       })
     })
