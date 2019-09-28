@@ -16,7 +16,7 @@ class Game extends React.Component {
       redCapturedPairs: 0,
       goldCapturedPairs: 0,
       history:[],
-      endpoint: 'ec2-13-58-53-201.us-east-2.compute.amazonaws.com'
+      endpoint: 'http://ec2-13-58-53-201.us-east-2.compute.amazonaws.com'
     }
     this.handleClick = this.handleClick.bind(this);
     this.handleReset = this.handleReset.bind(this);

@@ -1,17 +1,20 @@
 const express = require('express');
-const bodyParser = require('body-parser');
+//const bodyParser = require('body-parser');
 const socket = require('socket.io');
 const port = process.env.PORT || 80;
-const axios = require('axios');
+//const axios = require('axios');
 const app = express();
+const server = require('http').Server(app);
 
 // UNCOMMENT THE DATABASE YOU'D LIKE TO USE
 // const items = require('../database-mysql');
 // const items = require('../database-mongo');
 
+server.listen(`${port}`);
+
 app.use(express.static(__dirname + '/../react-client/dist'));
 
-const server = app.listen(port, () => console.log(`server listening on port ${port}!`));
+//const server = app.listen(port, () => console.log(`server listening on port ${port}!`));
 
 const io = socket(server);
 
