@@ -20,12 +20,16 @@ const io = socket(server);
 
 io.on('connection', function(socket){
 
-  console.log(`${socket.id} connected!`)
+  //console.log(`${socket.id} connected!`)
 
   socket.on('setGlobalState', (state)=>{
     io.emit('currentState', state);
   });
 
+});
+
+socket.on('disconnect', function () {
+  io.emit('user disconnected');
 });
 
 
