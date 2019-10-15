@@ -1,5 +1,5 @@
-# Project Name #
-Pente
+# Pente #
+
 
 <!--
 > This material was originally posted [here](http://www.quora.com/What-is-Amazons-approach-to-product-development-and-product-management). It is reproduced here for posterities sake.
@@ -17,11 +17,7 @@ Oh, and I also like to write press-releases in what I call "Oprah-speak" for mai
 Once the project moves into development, the press release can be used as a touchstone; a guiding light. The product team can ask themselves, "Are we building what is in the press release?" If they find they're spending time building things that aren't in the press release (overbuilding), they need to ask themselves why. This keeps product development focused on achieving the customer benefits and not building extraneous stuff that takes longer to build, takes resources to maintain, and doesn't provide real customer benefit (at least not enough to warrant inclusion in the press release).
  -->
 
-## Heading ##
-  Pente
-
-## Sub-Heading ##
-  a strategy board game for two players
+## a strategy board game for two players ##
 
 ## Summary ##
   Pente is a strategy board game for two or more players, created in 1977 by Gary Gabrel, a dishwasher at Hideaway Pizza, in Stillwater, Oklahoma. Customers played Pente at Hideaway Pizza on checkerboard tablecloths while waiting for their orders to arrive.
@@ -43,5 +39,4 @@ Once the project moves into development, the press release can be used as a touc
 ## Customer Quote ##
   "My teenage son used to play on his phone for all of our family meals and I had a difficult time engaging with him.  Now I can offer to play a game of Pente with him and he can't resist... I get to have quality time with my son again!"
 
-## Closing and Call to Action ##
-  What are you waiting for, grab a partner and go play some Pente!  You could have completed a game by now!
+## What are you waiting for, grab a partner and go play some Pente!  You could have completed a game by now! ##
